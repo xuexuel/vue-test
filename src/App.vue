@@ -1,19 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="" src="@/assets/logo.png" />
+    <CourseList :courses="courses"></CourseList>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CourseList from "@/components/CourseList.vue";
+import { getCourses } from "@/api/course"
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    CourseList,
+  },
+  data() {
+    return {
+      title: "开课吧购物车",
+      course: "",
+      // courses: ['web全栈', 'web高级'],
+      courses: [],
+    };
+  },
+  async created() {
+    const courses = await getCourses();
+    this.courses = courses;
+    // this.batchUpdate();
+  },
+};
 </script>
 
 <style>
@@ -24,5 +38,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
 </style>
